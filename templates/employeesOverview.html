@@ -16,6 +16,7 @@
                     <th>Description</th>
                     <th>Position</th>
                     <th>Hiring date</th>
+                    <th>action</th>
                 </tr>
                 {% for employee in employees %}
                 <tr onclick="document.location.href='{% url 'editEmployee' employee.id %}'">

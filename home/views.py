@@ -30,6 +30,8 @@ def signUp(request):
             request.session['password'] = password
             request.session['name'] = createUser.first_name + " " + createUser.last_name
             request.session['superuser'] = False
+            request.session['isHr'] = True
+            request.session['isManager'] = True
             Employees.objects.create(user=createUser, work_email=email, job_position="Administration",
                                      is_hr=True, is_manager=True, hiring_date=datetime.now())
         else:
@@ -80,8 +82,6 @@ def logOut(request):
         del request.session['password']
         del request.session['superuser']
         del request.session['name']
-        del request.session['isHr']
-        del request.session['isManager']
         request.session.modified = True
         response = redirect('/')
         return response
@@ -188,6 +188,18 @@ def editEmployee(request, pk):
             return redirect("editEmployee", editEmployee.id)
 
 
+def deleteEmployee(request):
+    checkUserIsLoggedIn = checkLogin(request)
+    if checkUserIsLoggedIn:
+        if request.method == 'POST':
+            pk = request.POST['id']
+            account = Employees.objects.get(id=pk)
+            account.delete()
+            return redirect("employeesOverview")
+    else:
+        return redirect('logIn')
+
+
 def leavesOverview(request):
     chkLogin = checkLogin(request)
     if chkLogin:
@@ -238,3 +250,15 @@ def editLeave(request, pk):
             editLeave.status = status
             editLeave.save()
             return redirect("editLeave", editLeave.id)
+
+
+def deleteLeave(request):
+    checkUserIsLoggedIn = checkLogin(request)
+    if checkUserIsLoggedIn:
+        if request.method == 'POST':
+            pk = request.POST['id']
+            account = LeavesRequest.objects.get(id=pk)
+            account.delete()
+            return redirect("leavesOverview")
+    else:
+        return redirect('logIn')

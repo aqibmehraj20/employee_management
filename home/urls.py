@@ -12,6 +12,8 @@ urlpatterns = [
     path('leavesOverview/', leavesOverview, name="leavesOverview"),
     path('createEmployee/', createEmployee, name="createEmployee"),
     path('createLeave/', createLeave, name="createLeave"),
+    path('deleteLeave/', deleteLeave, name="deleteLeave"),
+    path('deleteEmployee/', deleteEmployee, name="deleteEmployee"),
     url(r'^editLeave/(?P<pk>[0-9]+)/$', editLeave, name='editLeave'),
     url(r'^editEmployee/(?P<pk>[0-9]+)/$', editEmployee, name='editEmployee'),
 ]
