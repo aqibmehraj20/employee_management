@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="main-container">
+    <div class="content-wrapper">
+        <div class="content-section">
+            <div class="content-section-title">Quick Access</div>
+            <div class="apps-card"  >
+                {% if request.session.isHr %}
+                <div class="app-card" onclick="document.location.href='{% url 'employeesOverview' %}'">
+                <span>
+                <img src="/static/assets/images/employee.png" style="margin-right:10px;">
+                 Employee
+                </span>
+                    <div class="app-card__subtext">Manage Employees</div>
+                </div>
+                {% endif %}
+                <div class="app-card"  onclick="document.location.href='{% url 'leavesOverview' %}'" >
+                <span>
+                <img src="/static/assets/images/leave.png" style="margin-right:10px;">
+                  Leaves
+                </span>
+                     {% if request.session.isHr %}
+                    <div class="app-card__subtext">Manage Leaves</div>
+                    {% else %}
+                    <div class="app-card__subtext">Apply for Leave</div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

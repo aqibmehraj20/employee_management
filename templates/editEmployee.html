@@ -1,0 +1,72 @@
+{% extends 'base.html'%}
+
+{% block content%}
+{% if request.session.isHr %}
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit" class="save">Save</button>
+    <button onclick="document.location.href='{% url 'employeesOverview' %}'" class="save" type="reset">Back</button>
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} allert-dismissible fade show" role="alert">
+                <strong>Message : </strong> {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="firstName">First Name</label>
+                    <input type="text" placeholder="First Name" value="{{data.user.first_name}}" id="firstName"
+                           name="firstName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" placeholder="Last Name" value="{{data.user.last_name}}" id="lastName"
+                           name="lastName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="email">E-mail</label>
+                    <input type="email" placeholder="E-mail" id="email" value="{{data.user.email}}" name="email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Password" value="{{data.user.password}}" id="password"
+                           name="password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="description">Description</label>
+                    <textarea placeholder="Description" id="description"
+                              name="description">{{data.description}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="jobPosition">Job Position</label>
+                    <input type="text" placeholder="Job Position" value="{{data.job_position}}" id="jobPosition"
+                           name="jobPosition">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="hiringDate">Hiring Date</label>
+                    <input type="date" placeholder="Hiring Date" value="{{data.hiring_date|date:'Y-m-d'}}"
+                           id="hiringDate" name="hiringDate">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock %}

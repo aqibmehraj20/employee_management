@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit" class="save">Save</button>
+    <button onclick="document.location.href='{% url 'leavesOverview' %}'" class="save" type="reset">Back</button>
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} allert-dismissible fade show" role="alert">
+                <strong>Message : </strong> {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="durationFrom">Duration From</label>
+                    <input type="date" placeholder="Duration From" value="{{data.duration_from|date:'Y-m-d'}}"
+                           id="durationFrom" name="durationFrom">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="durationTo">Duration To</label>
+                    <input type="date" placeholder="Duration From" value="{{data.duration_to|date:'Y-m-d'}}"
+                           id="durationTo" name="durationTo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="status">Status</label>
+                    {% if not request.session.isHr %}
+                    {% if data.status == "Pending" %}
+                    <span for="Pending "><b>Pending</b></span>
+                    <input type="radio" name="status" id="Pending" value="Pending" checked>
+                    {% elif data.status == "Approved" %}
+                    <span for="Approved"><b>Approved</b></span>
+                    <input type="radio" name="status" id="Approved" value="Approved" checked>
+                    {% elif data.status == "Rejected" %}
+                    <span for="Rejected"><b>Rejected</b></span>
+                    <input type="radio" name="status" id="Rejected" value="Rejected" checked>
+                    {% endif %}
+                    {% endif %}
+                    {% if request.session.isHr %}
+                    <span for="Approved"><b>Approved</b></span>
+                    {% if data.status == "Approved" %}
+                    <input type="radio" name="status" id="Approved" value="Approved" checked>
+                    {% else %}
+                    <input type="radio" name="status" id="Approved" value="Approved">
+                    {% endif %}
+                    <span for="Rejected"><b>Rejected</b></span>
+                    {% if data.status == "Rejected" %}
+                    <input type="radio" name="status" id="Rejected" value="Rejected" checked>
+                    {% else %}
+                    <input type="radio" name="status" id="Rejected" value="Rejected">
+                    {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

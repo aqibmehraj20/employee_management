@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+
+{% block content%}
+
+<div class="main-container">
+    <div class="content-wrapper">
+        <div class="content-section">
+            <div class="content-section-title">All Leaves</div>
+            <button class="save" onclick="document.location.href='{% url 'createLeave' %}'">Apply Leave</button>
+
+            <table>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+                {% for leave in leaves %}
+                <tr onclick="document.location.href='{% url 'editLeave' leave.id %}'" >
+                    <td>{{leave.user.user.first_name}} {{leave.user.user.last_name}}</td>
+                    <td>{{leave.duration_from|date:'Y-m-d' }}</td>
+                    <td>{{leave.duration_to|date:'Y-m-d'}}</td>
+                    <td>
+                        {% if leave.status == "Pending" %}
+                        <span class="pending">{{leave.status}}</span>
+                        {% elif leave.status == "Approved" %}
+                        <span class="approved">{{leave.status}}</span>
+                        {% elif leave.status == "Rejected" %}
+                        <span class="rejected">{{leave.status}}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

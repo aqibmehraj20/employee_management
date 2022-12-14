@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{Title}}</title>
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+<div class="app">
+    <div class="header">
+        <div class="menu-circle"></div>
+        <div class="header-menu">
+            <a class="menu-link is-active" href="#">{{Title}}</a>
+        </div>
+        <div class="header-profile">
+            <div class="notification">
+                <span style="margin-right:10px;">{{ request.session.name }}</span>
+                <a href="{% url 'logOut' %}" class="sign-up">Log Out</a>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="left-side">
+            <div class="side-wrapper">
+                <div class="side-title">Menu</div>
+                <div class="side-menu">
+                    <a href="{% url 'index' %}">
+                        <img src="/static/assets/images/dashboard.png" style="margin-right:10px;">
+                        Dashboard
+                    </a>
+                    {% if request.session.isHr %}
+                    <a href="{% url 'employeesOverview' %}">
+                        <img src="/static/assets/images/employee.png" style="margin-right:10px;">
+                        Employees
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'leavesOverview' %}">
+                        <img src="/static/assets/images/leave.png" style="margin-right:10px;">
+                        Leaves
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% block content%}
+        {% endblock %}
+    </div>
+    <div class="overlay-app"></div>
+</div>
+</body>
+
+</html>
